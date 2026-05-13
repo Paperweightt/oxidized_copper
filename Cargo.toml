@@ -1,0 +1,19 @@
+[package]
+name = "oxidized_copper"
+version = "0.1.0"
+edition = "2024"
+
+[workspace]
+members = [
+    "crates/core",
+    "crates/cli",
+    "crates/bump",
+]
+
+[lib]
+name = "mcbe_core"
+path = "./crates/core/src/lib.rs"
+
+resolver = "2"
+
+[dependencies]

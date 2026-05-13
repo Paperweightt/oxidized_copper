@@ -1,0 +1,7 @@
+[package]
+name = "manfiest_bump"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+mcbe_core = { path = "../core" }
