@@ -1,5 +1,6 @@
 #![allow(dead_code)]
 
+use clap::ValueEnum;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 use std::{cmp, fs, io};
@@ -116,6 +117,7 @@ pub struct BumpArgs {
     pub r#type: BumpVersion,
 }
 
+#[derive(Debug, Clone, ValueEnum)]
 pub enum BumpVersion {
     Minor,
     Major,
