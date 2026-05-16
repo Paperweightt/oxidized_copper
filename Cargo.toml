@@ -17,3 +17,4 @@ path = "./crates/core/src/lib.rs"
 resolver = "2"
 
 [dependencies]
+walkdir = "2.5.0"
