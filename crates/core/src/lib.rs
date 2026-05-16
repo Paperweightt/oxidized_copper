@@ -19,22 +19,20 @@ pub fn validate_pack(dir: &Path) -> io::Result<bool> {
     Ok(false)
 }
 
-pub fn find_packs(dir: Vec<PathBuf>) -> io::Result<Vec<PathBuf>> {
+pub fn find_packs(dir: PathBuf) -> io::Result<Vec<PathBuf>> {
     let mut packs: Vec<PathBuf> = Vec::new();
 
-    for path in dir {
-        let walker = WalkDir::new(path).into_iter().filter_map(|e| e.ok());
+    let walker = WalkDir::new(dir).into_iter().filter_map(|e| e.ok());
 
-        for entry in walker {
-            let path = entry.path();
+    for entry in walker {
+        let path = entry.path();
 
-            if validate_pack(path)? {
-                packs.push(path.to_path_buf());
-            }
+        if validate_pack(path)? {
+            packs.push(path.to_path_buf());
         }
     }
 
-    return Ok(packs);
+    Ok(packs)
 }
 
 #[cfg(test)]
@@ -50,15 +48,22 @@ mod tests {
     }
     #[test]
     fn test_find_packs() {
-        let path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
 
-        let paths: Vec<PathBuf> = vec![
-            path.join("../../test/example_pack/"),
-            path.join("../../test/example_pack/resource_packs/pack0/"),
-        ];
+        path.push("../../test/example_pack/");
 
-        let result = find_packs(paths);
+        let result = find_packs(path);
 
-        assert_eq!(result.unwrap().len(), 3);
+        assert_eq!(result.unwrap().len(), 2);
+    }
+    #[test]
+    fn test_find_alone_pack() {
+        let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+
+        path.push("../../test/example_pack/behavior_packs");
+
+        let result = find_packs(path);
+
+        assert_eq!(result.unwrap().len(), 1);
     }
 }
