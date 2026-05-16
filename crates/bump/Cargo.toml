@@ -1,7 +1,9 @@
 [package]
-name = "manfiest_bump"
+name = "bump"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
 mcbe_core = { path = "../core" }
+serde = "1.0.228"
+serde_json = "1.0.149"
