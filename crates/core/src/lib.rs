@@ -5,6 +5,8 @@ use std::path::Path;
 use std::path::PathBuf;
 use walkdir::WalkDir;
 
+pub mod manifest;
+
 pub fn validate_pack(dir: &Path) -> io::Result<bool> {
     if dir.is_dir() {
         for entry in fs::read_dir(dir)? {

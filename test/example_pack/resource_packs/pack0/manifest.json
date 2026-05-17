@@ -2,21 +2,37 @@
   "format_version": 1,
   "header": {
     "name": "Vectora Editor",
+    "version": [
+      2,
+      17,
+      1
+    ],
     "description": "Select, move, rotate, mirror, undo, and more",
     "uuid": "bef9df01-909c-420d-aaf5-92344f3e7c72",
-    "version": [1, 17, 0],
-    "min_engine_version": [1, 12, 1]
+    "min_engine_version": [
+      1,
+      12,
+      1
+    ]
   },
   "modules": [
     {
+      "version": [
+        2,
+        17,
+        1
+      ],
       "type": "resources",
-      "uuid": "84811d6b-9703-4e6a-9a66-62f9f8b2faf4",
-      "version": [1, 0, 0]
+      "uuid": "84811d6b-9703-4e6a-9a66-62f9f8b2faf4"
     }
   ],
   "dependencies": [
     {
-      "version": [1, 17, 0],
+      "version": [
+        2,
+        17,
+        1
+      ],
       "uuid": "74d3c280-93c4-4605-9f22-c6199b4122da"
     }
   ]

@@ -7,4 +7,3 @@ edition = "2021"
 mcbe_core = { path = "../core" }
 bump = {path = "../bump"}
 
-clap = { version = "4", features = ["derive"] }
