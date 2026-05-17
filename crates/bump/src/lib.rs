@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use clap::ValueEnum;
 use std::cmp;
 use std::path::PathBuf;
