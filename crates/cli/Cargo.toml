@@ -7,3 +7,4 @@ edition = "2021"
 mcbe_core = { path = "../core" }
 bump = {path = "../bump"}
 
+clap = { workspace = true }
