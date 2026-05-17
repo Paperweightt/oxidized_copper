@@ -10,3 +10,9 @@ install-windows:
     } else { \
     Write-Host "Cargo bin is already in your PATH." -ForegroundColor Yellow; \
     }
+
+test-all:
+  cargo test -- --nocapture 
+
+test TEST:
+  cargo test -p {{TEST}} -- --nocapture 
