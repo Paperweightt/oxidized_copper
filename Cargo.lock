@@ -130,6 +130,7 @@ name = "mcbe"
 version = "0.1.0"
 dependencies = [
  "bump",
+ "clap",
  "mcbe_core",
 ]
 
