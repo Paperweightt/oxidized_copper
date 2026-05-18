@@ -13,16 +13,16 @@ struct Cli {
 #[derive(Subcommand)]
 enum Command {
     Bump {
-        #[arg(long)]
         path: PathBuf,
         r#type: BumpVersion,
     },
     Init {
-        #[arg(long)]
-        path: PathBuf,
-        template: String,
         name: String,
         description: String,
+        #[arg(default_value = "./")]
+        path: PathBuf,
+        #[arg(default_value_t = String::from("ts-starter"))]
+        template: String,
     },
 }
 
@@ -31,10 +31,7 @@ where
     F: FnOnce() -> R,
 {
     let start = Instant::now();
-
-    // Execute the passed compilation closure
     let result = pipeline_action();
-
     let duration = start.elapsed();
     let current_time = Local::now().format("%H:%M:%S").to_string();
 
