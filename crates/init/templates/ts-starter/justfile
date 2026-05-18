@@ -1,4 +1,7 @@
-bump TYPE:
-  mcbe bump --path ./behavior_packs/ {{TYPE}}
-  mcbe bump --path ./resource_packs/ {{TYPE}}
+set shell := ["cmd.exe", "/c"]
 
+bump TYPE:
+  mcbe bump \
+  -p ./behavior_packs/pack0/manifest.json \
+  -p ./resource_packs/pack0/manifest.json \
+  -t {{TYPE}}
