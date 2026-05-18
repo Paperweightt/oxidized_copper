@@ -3,6 +3,7 @@ members = [
     "crates/core",
     "crates/cli",
     "crates/bump",
+    "crates/init",
 ]
 resolver = "2"
 
@@ -11,3 +12,6 @@ walkdir = "2.5.0"
 clap = { version = "4", features = ["derive"] }
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.149"
+uuid = { version = "1.23.1", features = ["v4"]}
+include_dir = "0.7.4"
+chrono = "0.4"

@@ -1,6 +1,6 @@
 set shell := ["powershell.exe", "-c"]
 
-install-windows:
+install:
     cargo install --path crates/cli
     $cfgPath = "$Env:USERPROFILE\.cargo\bin"
     $userPath = [Environment]::GetEnvironmentVariable("PATH", "User")

@@ -1,0 +1,30 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "{{name}}",
+    "description": "{{description}}",
+    "version": [1, 0, 0],
+    "uuid": "{{bp_uuid}}",
+    "min_engine_version": [1, 20, 30]
+  },
+  "modules": [
+    {
+      "description": "Script resources",
+      "language": "javascript",
+      "type": "script",
+      "uuid": "{{script_uuid}}",
+      "version": [1, 0, 0],
+      "entry": "scripts/main.js"
+    }
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "{{latest_scriptapi_version}}"
+    },
+    {
+      "uuid": "{{rp_uuid}}",
+      "version": [1, 0, 0]
+    }
+  ]
+}

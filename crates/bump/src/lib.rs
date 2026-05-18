@@ -16,14 +16,25 @@ pub enum BumpVersion {
     Fix,
 }
 
-pub fn bump_pack(args: BumpArgs) -> Option<()> {
-    let pack_paths = mcbe_core::find_packs(args.path).ok()?;
+pub fn bump_pack(args: BumpArgs) {
+    let pack_paths = match mcbe_core::find_packs(args.path) {
+        Ok(paths) => paths,
+        Err(error) => panic!("[mcbe_cli] Problem finding packs: {error}"),
+    };
+
     let mut manifests: Vec<Manifest> = Vec::new();
     let mut min_version = [0, 0, 0];
 
     for mut path in pack_paths {
         path.push("manifest.json");
-        let manifest = Manifest::new(path).ok()?;
+        let manifest = match Manifest::new(path) {
+            Ok(manifest) => manifest,
+            Err(error) => {
+                eprintln!("[mcbe_cli] Problem parsing the manifest: {error}");
+                continue;
+            }
+        };
+
         let version = manifest.get_version();
 
         min_version[0] = cmp::max(version[0], min_version[0]);
@@ -40,12 +51,14 @@ pub fn bump_pack(args: BumpArgs) -> Option<()> {
     }
 
     for mut manifest in manifests {
-        println!("{:?}", min_version);
         manifest.set_version(min_version);
-        manifest.save().ok()?;
-    }
 
-    Some(())
+        if let Err(error) = manifest.save() {
+            println!("[mcbe_cli] Problem saving the manifest: {error}");
+        } else {
+            eprintln!("[mcbe_cli] Successfully set manifest to {min_version:?}")
+        }
+    }
 }
 
 #[cfg(test)]

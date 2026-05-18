@@ -1,0 +1,9 @@
+# Compiled output directory
+/dist
+/build
+
+# Dependencies
+/node_modules
+
+# Generated files
+generated/

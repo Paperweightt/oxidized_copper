@@ -1,0 +1,4 @@
+bump TYPE:
+  mcbe bump --path ./behavior_packs/ {{TYPE}}
+  mcbe bump --path ./resource_packs/ {{TYPE}}
+

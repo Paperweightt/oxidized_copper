@@ -1,12 +1,12 @@
 [package]
-name = "mcbe"
+name = "init"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
 mcbe_core = { path = "../core" }
-bump = {path = "../bump"}
-init = {path = "../init"}
 
 clap = { workspace = true }
-chrono = { workspace = true }
+serde = { workspace = true }
+uuid = { workspace = true }
+include_dir = { workspace = true }
