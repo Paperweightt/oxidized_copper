@@ -13,16 +13,28 @@ struct Cli {
 #[derive(Subcommand)]
 enum Command {
     Bump {
-        path: PathBuf,
+        #[arg(short, long, default_value = "./")]
+        paths: Vec<PathBuf>,
+        #[arg(short, long, default_value = "fix")]
         r#type: BumpVersion,
     },
     Init {
+        #[arg(short, long)]
         name: String,
+        #[arg(short, long)]
         description: String,
         #[arg(default_value = "./")]
         path: PathBuf,
         #[arg(default_value_t = String::from("ts-starter"))]
         template: String,
+    },
+    Transpile {
+        #[arg(short, long)]
+        source: PathBuf,
+        #[arg(short, long)]
+        destination: PathBuf,
+        #[arg(short, long)]
+        source_map_destination: Option<PathBuf>,
     },
 }
 
@@ -51,12 +63,17 @@ fn read_cli() {
     let cli = Cli::parse();
 
     match cli.command {
-        Command::Bump { path, r#type } => bump::bump_pack(bump::BumpArgs { path, r#type }),
+        Command::Bump { paths, r#type } => bump::bump_pack(bump::BumpArgs { paths, r#type }),
         Command::Init {
             path,
             template,
             name,
             description,
         } => init::handle_init_command(&template, path, &name, &description),
+        Command::Transpile {
+            source,
+            destination,
+            source_map_destination,
+        } => transpile::transpile(&source, &destination, source_map_destination),
     };
 }

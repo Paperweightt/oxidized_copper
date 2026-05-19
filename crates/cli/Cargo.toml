@@ -4,9 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-mcbe_core = { path = "../core" }
 bump = {path = "../bump"}
 init = {path = "../init"}
+transpile = {path = "../transpile"}
 
 clap = { workspace = true }
 chrono = { workspace = true }
