@@ -1,4 +1,7 @@
 set windows-shell := ["powershell.exe", "-NoProfile", "/c"]
+
+prettier := ".\\node_modules\\.bin\\prettier.cmd"
+
 mojang := env_var("USERPROFILE")+"/AppData/Roaming/Minecraft Bedrock/Users/Shared/games/com.mojang"
 mojang_bp := mojang + "/development_behavior_packs/{{name}}-{{bp_uuid}}"
 mojang_rp := mojang + "/development_resource_packs/{{name}}-{{rp_uuid}}"
@@ -8,8 +11,8 @@ bump TYPE:
     -p ./behavior_packs/pack0/manifest.json \
     -p ./resource_packs/pack0/manifest.json \
     -t {{ TYPE }}
-    prettier --write .\behavior_packs\pack0\manifest.json
-    prettier --write .\resource_packs\pack0\manifest.json
+    {{prettier}} --write .\behavior_packs\pack0\manifest.json
+    {{prettier}} --write .\resource_packs\pack0\manifest.json
 
 build:
     node esbuild.config.mjs
