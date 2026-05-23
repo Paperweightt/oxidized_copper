@@ -1,7 +1,0 @@
-set shell := ["cmd.exe", "/c"]
-
-bump TYPE:
-  mcbe bump \
-  -p ./behavior_packs/pack0/manifest.json \
-  -p ./resource_packs/pack0/manifest.json \
-  -t {{TYPE}}

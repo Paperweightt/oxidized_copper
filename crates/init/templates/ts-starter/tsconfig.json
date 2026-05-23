@@ -1,31 +1,15 @@
-{ 
-    "compilerOptions":{ 
-       "target":"es6",
-       "moduleResolution":"Node",
-       "module": "ES2020",
-       "declaration":false,
-       "noLib":false,
-       "emitDecoratorMetadata":true,
-       "experimentalDecorators":true,
-       "sourceMap":true,
-       "pretty":true,
-       "forceConsistentCasingInFileNames": true,
-       "strict": true,
-       "allowUnreachableCode":true,
-       "allowUnusedLabels":true,
-       "noImplicitAny":true,
-       "noImplicitReturns":false,
-       "noImplicitUseStrict":false,
-       "outDir":"lib",
-       "rootDir": ".",
-       "baseUrl":"behavior_packs/",
-       "listFiles":false,
-       "noEmitHelpers":true,
-       "skipLibCheck": true
-    },
-    "include":[ 
-       "scripts/**/*"
-    ],
-    "exclude": ["lib", "dist", "node_modules"],
-    "compileOnSave":false
- }
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ES6",
+    "moduleResolution": "Node",
+    "esModuleInterop": false,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "rootDir": "./scripts",
+    "outDir": "./behavior_packs/pack0/scripts"
+  },
+  "exclude": ["node_modules"]
+}
+

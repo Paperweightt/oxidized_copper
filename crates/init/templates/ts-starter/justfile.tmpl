@@ -1,0 +1,32 @@
+set windows-shell := ["powershell.exe", "-NoProfile", "/c"]
+mojang := env_var("USERPROFILE")+"/AppData/Roaming/Minecraft Bedrock/Users/Shared/games/com.mojang"
+
+bump TYPE:
+    mcbe bump \
+    -p ./behavior_packs/pack0/manifest.json \
+    -p ./resource_packs/pack0/manifest.json \
+    -t {{ TYPE }}
+    prettier --write .\behavior_packs\pack0\manifest.json
+    prettier --write .\resource_packs\pack0\manifest.json
+
+build:
+    node esbuild.config.mjs
+
+build-watch:
+    node esbuild.config.mjs --watch
+
+link:
+    mcbe link \
+    -i ./behavior_packs/pack0 \
+    -o "{{mojang}}/development_behavior_packs/{{name}}-{{bp_uuid}}"
+    mcbe link \
+    -i ./resource_packs/pack0 \
+    -o "{{mojang}}/development_resource_packs/{{name}}-{{rp_uuid}}"
+
+unlink:
+    mcbe unlink -i "{{mojang}}/development_resource_packs/{{name}}-{{rp_uuid}}"
+    mcbe unlink -i "{{mojang}}/development_behavior_packs/{{name}}-{{bp_uuid}}"
+    rm "{{mojang}}/development_behavior_packs/{{name}}-{{rp_uuid}}"
+    rm "{{mojang}}/development_resource_packs/{{name}}-{{bp_uuid}}"
+
+
