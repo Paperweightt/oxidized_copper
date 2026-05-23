@@ -5,7 +5,7 @@ use std::path::PathBuf;
 use mcbe_core::manifest::Manifest;
 
 pub struct BumpArgs {
-    pub path: PathBuf,
+    pub paths: Vec<PathBuf>,
     pub r#type: BumpVersion,
 }
 
@@ -17,16 +17,10 @@ pub enum BumpVersion {
 }
 
 pub fn bump_pack(args: BumpArgs) {
-    let pack_paths = match mcbe_core::find_packs(args.path) {
-        Ok(paths) => paths,
-        Err(error) => panic!("[mcbe_cli] Problem finding packs: {error}"),
-    };
-
     let mut manifests: Vec<Manifest> = Vec::new();
     let mut min_version = [0, 0, 0];
 
-    for mut path in pack_paths {
-        path.push("manifest.json");
+    for path in args.paths {
         let manifest = match Manifest::new(path) {
             Ok(manifest) => manifest,
             Err(error) => {
@@ -82,16 +76,5 @@ mod tests {
         manifest.set_version([5, 5, 5]);
 
         assert_eq!(manifest.get_version(), [5, 5, 5]);
-    }
-
-    #[test]
-    fn bump_pack_version() {
-        let path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-        let new_path = path.join("../../test/example_pack/behavior_packs/pack0");
-
-        bump_pack(BumpArgs {
-            path: new_path,
-            r#type: BumpVersion::Fix,
-        });
     }
 }

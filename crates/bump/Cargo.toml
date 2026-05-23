@@ -6,4 +6,3 @@ edition = "2021"
 [dependencies]
 mcbe_core = { path = "../core" }
 clap = { workspace = true }
-serde = { workspace = true }
