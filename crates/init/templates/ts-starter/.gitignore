@@ -1,9 +1,7 @@
 # Compiled output directory
 /dist
-/build
+/behavior_packs/pack0/scripts
+generated/
 
 # Dependencies
 /node_modules
-
-# Generated files
-generated/

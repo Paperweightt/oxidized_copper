@@ -1,30 +1,48 @@
 import * as esbuild from "esbuild";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 const args = process.argv.slice(2);
 const watch = args.includes("--watch");
 
 const config = {
-    entryPoints: ["scripts/main.ts"],
-    outfile: "behavior_packs/Neon_Knockout/scripts/main.js",
-    bundle: true,
-    minify: true,
-    platform: "node",
-    treeShaking: true,
-    format: "esm",
-    sourcemap: false,
-    logLevel: "info",
-    external: ["@minecraft/server", "@minecraft/server-ui"],
+  entryPoints: ["scripts/main.ts"],
+  outfile: "behavior_packs/pack0/scripts/main.js",
+  bundle: true,
+  minify: true,
+  platform: "node",
+  treeShaking: true,
+  format: "esm",
+  sourcemap: "external",
+  logLevel: "info",
+  external: ["@minecraft/server", "@minecraft/server-ui"],
+  write: false,
 };
 
-async function build() {
-    if (watch) {
-        const ctx = await esbuild.context(config);
-        await ctx.watch();
-        console.log("Watching for changes...");
-    } else {
-        await esbuild.build(config);
-        console.log("Build complete!");
-    }
+async function main() {
+  if (watch) {
+    const watcher = fs.watch("scripts");
+    watcher.addListener("change", async () => {
+      build();
+    });
+  } else {
+    build();
+  }
 }
 
-build().catch(() => process.exit(1));
+async function build() {
+  const result = await esbuild.build(config);
+  const sourceMapPath = "./dist/debug/main.js.map";
+
+  for (let out of result.outputFiles) {
+    if (path.extname(out.path) === ".js") {
+      fs.mkdirSync(path.dirname(out.path), { recursive: true });
+      fs.writeFileSync(out.path, out.text);
+    } else {
+      fs.mkdirSync(path.dirname(sourceMapPath), { recursive: true });
+      fs.writeFileSync(sourceMapPath, out.text);
+    }
+  }
+}
+
+main().catch(() => process.exit(1));
