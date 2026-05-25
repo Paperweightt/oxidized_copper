@@ -93,8 +93,8 @@ mod tests {
     #[test]
     fn transpile_test() {
         transpile(
-            Path::new("./scripts/test.ts"),
-            Path::new("./mojang/test.js"),
+            Path::new("./test/scripts/main.ts"),
+            Path::new("./test/mojang/main.js"),
             Some(PathBuf::from("./dist/debug/main.js.map")),
         )
     }
