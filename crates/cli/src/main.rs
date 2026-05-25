@@ -19,22 +19,22 @@ enum Command {
         r#type: BumpVersion,
     },
     Init {
-        #[arg(short, long)]
         name: String,
-        #[arg(short, long)]
+        #[arg(short, long, default_value_t = String::new())]
         description: String,
-        #[arg(default_value = "./")]
+        #[arg(short, long, default_value = "./")]
         path: PathBuf,
-        #[arg(default_value_t = String::from("ts-starter"))]
+        #[arg(short, long, default_value_t = String::from("ts-starter"))]
         template: String,
     },
-    Transpile {
+    Link {
         #[arg(short, long)]
-        source: PathBuf,
+        input: PathBuf,
         #[arg(short, long)]
-        destination: PathBuf,
-        #[arg(short, long)]
-        source_map_destination: Option<PathBuf>,
+        output: PathBuf,
+    },
+    Unlink {
+        input: PathBuf,
     },
 }
 
@@ -70,10 +70,7 @@ fn read_cli() {
             name,
             description,
         } => init::handle_init_command(&template, path, &name, &description),
-        Command::Transpile {
-            source,
-            destination,
-            source_map_destination,
-        } => transpile::transpile(&source, &destination, source_map_destination),
+        Command::Link { input, output } => link::link(&input, &output),
+        Command::Unlink { input } => link::unlink(&input),
     };
 }
