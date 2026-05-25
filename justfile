@@ -1,7 +1,13 @@
-set shell := ["powershell.exe", "-c"]
+set shell := ["powershell.exe", "-NoProfile", "/c"]
+inno :=  "C:\\Users\\henry\\AppData\\Local\\Programs\\Inno Setup 6\\ISCC.exe"
 
-install:
+default:
+    @just --list
+
+build:
     cargo install --path crates/cli
+
+install: build
     $cfgPath = "$Env:USERPROFILE\.cargo\bin"
     $userPath = [Environment]::GetEnvironmentVariable("PATH", "User")
     if ($userPath -notlike ("*" + $cfgPath + "*")) {\
@@ -10,6 +16,12 @@ install:
     } else { \
     Write-Host "Cargo bin is already in your PATH." -ForegroundColor Yellow; \
     }
+
+build-inno: build
+    & "{{inno}}" .\installer\setup.iss
+
+local-deploy-inno: build-inno
+    .\installer\dist\copper-installer.exe
 
 test-all:
   cargo test -- --nocapture 
