@@ -1,12 +1,12 @@
 [package]
-name = "mcbe"
+name = "cu"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
 bump = {path = "../bump"}
 init = {path = "../init"}
-transpile = {path = "../transpile"}
+link = {path = "../link"}
 
 clap = { workspace = true }
 chrono = { workspace = true }
