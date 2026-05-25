@@ -283,6 +283,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "cu"
+version = "0.1.0"
+dependencies = [
+ "bump",
+ "chrono",
+ "clap",
+ "init",
+ "link",
+]
+
+[[package]]
 name = "digest"
 version = "0.11.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -533,6 +544,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "35e770254dd7802184595b1d30da2a15cb72569e2aca2b177aef8d22eac8a693"
 
 [[package]]
+name = "junction"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "160f2eade097f30263b548aae5deb12ad349c909baa710fa24b92c9090b2e006"
+dependencies = [
+ "scopeguard",
+ "windows-sys",
+]
+
+[[package]]
 name = "leb128fmt"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -545,21 +566,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "68ab91017fe16c622486840e4c83c9a37afeff978bd239b5293d61ece587de66"
 
 [[package]]
+name = "link"
+version = "0.1.0"
+dependencies = [
+ "junction",
+]
+
+[[package]]
 name = "log"
 version = "0.4.29"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5e5032e24019045c762d3c0f28f5b6b8bbf38563a65908389bf7978758920897"
-
-[[package]]
-name = "mcbe"
-version = "0.1.0"
-dependencies = [
- "bump",
- "chrono",
- "clap",
- "init",
- "transpile",
-]
 
 [[package]]
 name = "mcbe_core"
@@ -1137,6 +1154,12 @@ checksum = "93fc1dc3aaa9bfed95e02e6eadabb4baf7e3078b0bd1b4d7b6b0b68378900502"
 dependencies = [
  "winapi-util",
 ]
+
+[[package]]
+name = "scopeguard"
+version = "1.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
 
 [[package]]
 name = "self_cell"
