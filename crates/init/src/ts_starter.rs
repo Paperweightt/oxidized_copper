@@ -46,7 +46,7 @@ impl Template for TypeScriptStarter {
                 contents = contents.replace("{{rp_uuid}}", rp_uuid.as_str());
                 contents = contents.replace("{{script_uuid}}", script_uuid.as_str());
                 contents = contents.replace("{{random_uuid}}", &Uuid::new_v4().to_string());
-                contents = contents.replace("{{latest_scriptapi_version}}", "3.5.0");
+                contents = contents.replace("{{latest_scriptapi_version}}", "2.7.0");
 
                 dest_path.set_extension("");
 
