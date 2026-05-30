@@ -1,4 +1,3 @@
-#[allow(unused_imports)]
 use serde::{Deserialize, Serialize};
 use serde_json;
 use std::path::PathBuf;
