@@ -23,7 +23,11 @@ async function main() {
   if (watch) {
     const watcher = fs.watch("scripts");
     watcher.addListener("change", async () => {
-      build();
+      try {
+        build();
+      } catch (error) {
+        console.log(error);
+      }
     });
   } else {
     build();
