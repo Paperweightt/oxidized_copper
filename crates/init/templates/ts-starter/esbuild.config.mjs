@@ -23,30 +23,30 @@ async function main() {
   if (watch) {
     const watcher = fs.watch("scripts");
     watcher.addListener("change", async () => {
-      try {
-        build();
-      } catch (error) {
-        console.log(error);
-      }
+      build();
     });
-  } else {
-    build();
   }
+  build();
 }
 
 async function build() {
-  const result = await esbuild.build(config);
-  const sourceMapPath = "./dist/debug/main.js.map";
-
-  for (let out of result.outputFiles) {
-    if (path.extname(out.path) === ".js") {
-      fs.mkdirSync(path.dirname(out.path), { recursive: true });
-      fs.writeFileSync(out.path, out.text);
-    } else {
-      fs.mkdirSync(path.dirname(sourceMapPath), { recursive: true });
-      fs.writeFileSync(sourceMapPath, out.text);
-    }
-  }
+  esbuild
+    .build(config)
+    .then((result) => {
+      const sourceMapPath = "./dist/debug/main.js.map";
+      for (let out of result.outputFiles) {
+        if (path.extname(out.path) === ".js") {
+          fs.mkdirSync(path.dirname(out.path), { recursive: true });
+          fs.writeFileSync(out.path, out.text);
+        } else {
+          fs.mkdirSync(path.dirname(sourceMapPath), { recursive: true });
+          fs.writeFileSync(sourceMapPath, out.text);
+        }
+      }
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 }
 
 main().catch(() => process.exit(1));
