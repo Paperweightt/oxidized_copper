@@ -8,7 +8,7 @@ use uuid::Uuid;
 
 pub struct TypeScriptStarter;
 
-static TS_TEMPLATE_DIR: Dir<'static> = include_dir!("$CARGO_MANIFEST_DIR/templates/ts-starter");
+pub static TS_TEMPLATE_DIR: Dir<'static> = include_dir!("$CARGO_MANIFEST_DIR/templates/ts-starter");
 
 impl Template for TypeScriptStarter {
     fn name(&self) -> &'static str {
@@ -19,17 +19,30 @@ impl Template for TypeScriptStarter {
         "A Behavior Pack pre-configured with TypeScript"
     }
 
-    fn generate(&self, target_path: &Path, name: &str, description: &str) -> io::Result<()> {
+    fn generate(
+        &self,
+        target_path: &Path,
+        name: &str,
+        description: &str,
+        ignore_files: Vec<&Path>,
+    ) -> io::Result<()> {
         let bp_uuid = Uuid::new_v4().to_string();
         let rp_uuid = Uuid::new_v4().to_string();
         let script_uuid = Uuid::new_v4().to_string();
 
-        for entry in get_all_files(&TS_TEMPLATE_DIR) {
+        'outer: for entry in get_all_files(&TS_TEMPLATE_DIR) {
             let src_path = entry.path();
-            let mut dest_path = target_path.join(name).join(src_path);
+            let mut dest_path = target_path.join(src_path);
 
             if let Some(parent) = dest_path.parent() {
                 fs::create_dir_all(parent)?;
+            }
+
+            for file in &ignore_files {
+                println!("{} {}", file.to_string_lossy(), src_path.to_string_lossy());
+                if *file == src_path {
+                    continue 'outer;
+                }
             }
 
             let extension = src_path

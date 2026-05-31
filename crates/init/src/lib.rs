@@ -5,6 +5,7 @@ use std::io;
 use std::path::Path;
 use std::path::PathBuf;
 
+mod nvr;
 mod ts_starter;
 
 pub struct BumpArgs {
@@ -22,7 +23,13 @@ pub enum BumpVersion {
 pub trait Template {
     fn name(&self) -> &'static str;
     fn description(&self) -> &'static str;
-    fn generate(&self, target_path: &Path, name: &str, description: &str) -> io::Result<()>;
+    fn generate(
+        &self,
+        target_path: &Path,
+        name: &str,
+        description: &str,
+        ignore_files: Vec<&Path>,
+    ) -> io::Result<()>;
 }
 
 pub struct TemplateRegistry {
@@ -41,6 +48,7 @@ impl TemplateRegistry {
             templates: HashMap::new(),
         };
         registry.register(ts_starter::TypeScriptStarter);
+        registry.register(nvr::Nvr);
 
         registry
     }
@@ -64,7 +72,9 @@ impl TemplateRegistry {
         description: &str,
     ) -> io::Result<()> {
         if let Some(template) = self.templates.get(template_name) {
-            template.generate(target_path, name, description)
+            let path = PathBuf::from(target_path).join(name);
+
+            template.generate(&path, name, description, vec![])
         } else {
             Err(io::Error::new(
                 io::ErrorKind::NotFound,
@@ -119,7 +129,7 @@ mod tests {
     #[test]
     fn test() {
         let path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-        let new_path = path.join("../../test");
+        let new_path = path.join("../../temp");
 
         let registry = TemplateRegistry::new();
         match registry.instantiate(
