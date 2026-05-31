@@ -39,7 +39,6 @@ impl Template for TypeScriptStarter {
             }
 
             for file in &ignore_files {
-                println!("{} {}", file.to_string_lossy(), src_path.to_string_lossy());
                 if *file == src_path {
                     continue 'outer;
                 }
